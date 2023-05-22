@@ -31,6 +31,7 @@
                                     <h4>BOOKS</h4>
                                     <div class="recent-post">
                                         <!-- start single post -->
+                                        {% for book in object_list reversed %}
                                         <div class="recent-single-post">
                                             <div class="post-img">
                                                 <a href="#">
@@ -39,7 +40,7 @@
                                             </div>
                                             <div class="pst-content">
                                                 <p>
-                                                    <a href="#"> <strong>Redug Lerse dolor sit amet consect adipis elit</strong></a>
+                                                    <a href="{{book.get_absolute_url}}"> <strong>{{book.title}}</strong></a>
                                                     <br>
                                                     <span class="comments-type">
                                                         <i class="bi bi-person"></i>
@@ -50,7 +51,7 @@
                                                           <a href="#"> 11 comments</a>
                                                           </span> |
                                                     <span class="date-type">
-                                                      <i class="bi bi-calendar"></i> 2016-03-05 / 09:10:16
+                                                      <i class="bi bi-calendar"></i> {{book.updated_on}}
                                                     </span>
 
 
@@ -60,6 +61,7 @@
 
                                             </div>
                                         </div>
+                                        {% endfor %}
                                         <!-- End single post -->
 
 
@@ -113,7 +115,7 @@
                                         </p>
                                     </div>
                                     <span>
-                                        <a href="{% url 'journal_detail' %}" class="ready-btn">Read more</a>
+                                        <a href="" class="ready-btn">Read more</a>
                                       </span>
                                 </div>
                             </div>
