@@ -18,8 +18,9 @@ class User(models.Model):
 #Book Model
 
 STATUS = (
-    (0, "Draft"),
-    (1, "Published")
+    ("Draft", "Draft"),
+    ("Published", "Published")
+    
 )
 
 
@@ -30,7 +31,7 @@ class Category(models.Model): #Category for the Article
     class Meta:
         verbose_name = "Category"
         verbose_name_plural = "Categories"
-        ordering = ['title'][:]
+        ordering = ['title']
 
     def __str__(self):
         return self.title
@@ -46,10 +47,11 @@ class BookDetailPost(models.Model):
     # tags = TaggableManager() #Tags for a Particular Article, You need to install Taggit
     category = models.ForeignKey('Category', related_name='category', on_delete=models.SET_NULL,null=True, blank=True, help_text="Choose the ctegory your book fall in.") #Category of the article
     keywords = models.CharField(max_length=250, help_text="Choose keywords to locate your book easier", null=True, blank=True) #Keywords to be used in SEO
-    cover = models.ImageField(upload_to='images/', null=True, blank=True) #Cover Image of the article
+    cover = models.ImageField(upload_to='book_covers/', null=True, blank=True) #Cover Image of the article
+    book = models.FileField(upload_to='books/',null=True, help_text='Upload your book here')# The book
     created_on = models.DateTimeField(auto_now_add=True) #Date of creation
     updated_on = models.DateTimeField(auto_now=True) #Date of updation
-    status = models.IntegerField(choices=STATUS, default=0) #Status of the Article either Draft or Published
+    status = models.CharField(choices=STATUS, max_length=200, default="Published") #Status of the Article either Draft or Published
 
     def __str__(self):
         return self.title

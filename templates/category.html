@@ -34,16 +34,9 @@
                                         {% for book in object_list reversed %}
                                         <div class="recent-single-post">
                                             <div class="post-img">
-                                                {% if book.cover %}
                                                 <a href="#">
-                                                    <img src="{{book.cover.url}}" alt="{{book.title}}" style="width: 100px; height: 60px;">
+                                                    <img src="{% static 'img/blog/1.jpg' %}" alt="">
                                                 </a>
-                                                {% else %}
-                                                <a href="#">
-                                                    <img src="{% static 'img/background/reviews-bg.jpg' %}" alt="No image here">
-                                                </a>
-
-                                                {% endif %}
                                             </div>
                                             <div class="pst-content">
                                                 <p>
@@ -51,11 +44,11 @@
                                                     <br>
                                                     <span class="comments-type">
                                                         <i class="bi bi-person"></i>
-                                                        <a href="{{book.get_absolute_url}}"> author</a>
+                                                        <a href="#"> author</a>
                                                         </span> |
                                                     <span class="comments-type">
                                                           <i class="bi bi-chat"></i>
-                                                          <a href="{{book.get_absolute_url}}"> 11 comments</a>
+                                                          <a href="#"> 11 comments</a>
                                                           </span> |
                                                     <span class="date-type">
                                                       <i class="bi bi-calendar"></i> {{book.updated_on}}
@@ -77,7 +70,21 @@
                                 <!-- recent end -->
                             </div>
 
-                            {% include 'category-option.html' %}
+                            <div class="single-blog-page">
+                                <div class="left-tags blog-tags">
+                                    <div class="popular-tag left-side-tags left-blog">
+                                        <h4>Categories</h4>
+                                        <ul>
+                                           
+                                            <li>
+                                                <a href="">{% for category in category %}{{category}}{% endfor %}</a>
+                                            </li>
+                                            
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- End left sidebar -->

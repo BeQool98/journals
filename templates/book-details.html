@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 {% load static %}
+{% block title %}{{ object.title}}{% endblock title %}
 
 {% block content %}
 
@@ -17,7 +18,7 @@
                                 <!-- single-blog start -->
                                 <article class="blog-post-wrapper">
                                     <div class="post-thumbnail">
-                                        <img src="{% static 'img/blog/6.jpg' %}" alt="" />
+                                        <img src="{{object.cover.url}}" alt="{{object.title}}" />
                                     </div>
                                     <div class="post-information">
                                         <h2>{{object.title}}</h2>
@@ -31,9 +32,8 @@
                       </span>
                                             <span>
                         <i class="bi bi-tags"></i>
-                        <a href="#">tools</a>,
-                        <a href="#"> Humer</a>,
-                        <a href="#">House</a>
+                        <a href="#">{{object.status}}</a>
+                        
                       </span>
                       <span><i class="bi bi-chat"></i> <a href="#">6 comments</a></span>
                     </div>
@@ -47,7 +47,7 @@
                                     </div>
                                     <div class="row" >
                                         <span>
-                                        <a href="" class="btn btn-block btn-info text-white download_btn m-auto">Download</a>
+                                        <a href="{% url 'download' object.id%}" class="btn btn-block btn-info text-white download_btn m-auto">Download</a>
                                         </span>
                                     </div>
                                 </article>
