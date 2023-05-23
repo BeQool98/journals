@@ -12,8 +12,10 @@ class Home(ListView):
 
     def  get_context_data(self,*args, **kwargs):
         category = Category.objects.all()
+        latest = BookDetailPost.objects.all().last()
         context = super(Home, self).get_context_data(*args, **kwargs)
         context["category"] = category
+        context["latest"] = latest
         return context
 
 
@@ -40,6 +42,14 @@ def category(request, title):
     context = {'title': title, 'category': category}
     
     return render(request, 'category.html', context)
+
+def search(request):
+     if request.method == 'POST':
+        search = request.POST.get('search_btn')
+        print(search)
+        searched = BookDetailPost.objects.filter(title__contains=search)
+        print(searched)
+     return searched
     #| slice: "200"
   
 

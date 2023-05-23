@@ -6,13 +6,13 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>{% block title %}BOOKS{% endblock title %}</title>
+    <title>{% block title %}VUNOKLANG{% endblock title %}</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="{% static 'img/logo.jpg'%}" rel="icon">
+    <link href="{% static 'img/logo.jpg'%}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900" rel="stylesheet">
@@ -44,9 +44,9 @@
         <div class="container d-flex justify-content-between">
 
             <div class="logo">
-                <h1><a href="{%url 'home'%}"><span>e</span>Business</a></h1>
+                <h1><a href="{%url 'home'%}"><img src="" alt=""><span>VUNO</span>KLANG</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
-                <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+                {% comment %} <a href="index.html"><img src="{% static 'img/logo.jpg'%}" alt="" class="img-fluid"></a> {% endcomment %}
             </div>
 
             <nav id="navbar" class="navbar">
@@ -79,10 +79,10 @@
                         <div class="footer-content">
                             <div class="footer-head">
                                 <div class="footer-logo">
-                                    <h2><span>e</span>Business</h2>
+                                    <h2><span>VUNO</span>KLANG</h2>
                                 </div>
 
-                                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>
+                                <p>MULTIDISCIPLINARY JOURNAL OF SCIENCE AND TECHNOLOGYEDUCATION.</p>
                                 <div class="footer-icons">
                                     <ul>
                                         <li>
@@ -108,11 +108,11 @@
                             <div class="footer-head">
                                 <h4>information</h4>
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+                                    FACULTY OF EDUCATION, MODIBBO ADAMA UNIVERSITY, YOLA..
                                 </p>
                                 <div class="footer-contacts">
-                                    <p><span>Tel:</span> +123 456 789</p>
-                                    <p><span>Email:</span> contact@example.com</p>
+                                    <p><span>Tel:</span><a href="tel:+2347068031933">+234 7068031933</a> </p>
+                                    <p><span>Email:</span><a href="mailto:aaelija@mau.edu.ng"> aaelija@mau.edu.ng</a> </p>
                                     <p><span>Working Hours:</span> 9am-5pm</p>
                                 </div>
                             </div>
@@ -122,15 +122,17 @@
                     <div class="col-md-4">
                         <div class="footer-content">
                             <div class="footer-head">
-                                <h4>Instagram</h4>
+                                <h4>BOOKS</h4>
                                 <div class="flicker-img">
-                                    <a href="#"><img src="{% static '/img/portfolio/1.jpg' %}" alt=""></a>
-                                    <a href="#"><img src="{% static '/img/portfolio/2.jpg' %}" alt=""></a>
-                                    <a href="#"><img src="{% static '/img/portfolio/3.jpg' %}" alt=""></a>
-                                    <a href="#"><img src="{% static '/img/portfolio/4.jpg' %}" alt=""></a>
-                                    <a href="#"><img src="{% static '/img/portfolio/5.jpg' %}" alt=""></a>
-                                    <a href="#"><img src="{% static '/img/portfolio/6.jpg' %}" alt=""></a>
-                                </div>
+                                    {% for image in object_list %}
+                                    {% if image.cover %}
+                                    <a href="{{image.get_absolute_url}}"><img src="{{image.cover.url}}" alt="{{image.title}}" style="width: 100px; height: 60px;"></a>
+                                    {% else %}
+                                    <a href="{{image.get_absolute_url}}"><img src="{% static 'img/background/empty.jfif' %}" alt="No image here" style="width: 100px; height: 60px;"></a>
+
+                                    {% endif %}
+                                    {% endfor %}
+                                                                    </div>
                             </div>
                         </div>
                     </div>
@@ -143,7 +145,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="copyright text-center">
                             <p>
-                                &copy; Copyright <strong>eBusiness</strong>. All Rights Reserved
+                                &copy; Copyright <strong>VUNOKLAN</strong>. All Rights Reserved
                             </p>
                         </div>
                         <div class="credits">
@@ -153,7 +155,7 @@
               Licensing information: https://bootstrapmade.com/license/
               Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=eBusiness
             -->
-                            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                            Designed by <a href="https://mysmegearhub.com/" target="_blank">SME Gear</a>
                         </div>
                     </div>
                 </div>
@@ -163,7 +165,7 @@
     <!-- End  Footer -->
 
     <div id="preloader"></div>
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
