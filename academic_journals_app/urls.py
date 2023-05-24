@@ -7,6 +7,9 @@ urlpatterns = [
     path('about', about_page, name="about"),
     path('book-details/<slug:slug>', BookDetail.as_view(), name="book_detail"),
     path('download/<int:document_id>', download, name="download"),
+    path('search/', search, name="search"),
     path('category/<str:title>/', category, name="category"),
-    # path('', get_category, name="get_category"),
+   
 ]
+
+    # path('', get_category, name="get_category"),

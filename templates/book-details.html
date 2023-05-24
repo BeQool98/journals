@@ -18,17 +18,21 @@
                                 <!-- single-blog start -->
                                 <article class="blog-post-wrapper">
                                     <div class="post-thumbnail">
+                                        {% if object.cover %}
                                         <img src="{{object.cover.url}}" alt="{{object.title}}" />
+                                        {% else %}
+                                        <img src="{% static 'img/background/empty.jfif' %}" alt="No image here">
+                                        {% endif %}
                                     </div>
                                     <div class="post-information">
                                         <h2>{{object.title}}</h2>
                                         <div class="entry-meta">
                                             <span class="author-meta"><i class="bi bi-person"></i> <a href="#">admin</a></span>
-                                            <span><i class="bi bi-clock"></i> march 28, 2016</span>
+                                            <span><i class="bi bi-clock"></i> {{object.updated_on}}</span>
                                             <span class="tag-meta">
-                        <i class="bi bi-folder"></i>
+                        {% comment %} <i class="bi bi-folder"></i>
                         <a href="#">painting</a>,
-                        <a href="#">work</a>
+                        <a href="#">work</a> {% endcomment %}
                       </span>
                                             <span>
                         <i class="bi bi-tags"></i>
