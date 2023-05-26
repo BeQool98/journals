@@ -1,3 +1,4 @@
+
 {% extends 'main.html' %}
 {% load static %}
 
@@ -32,7 +33,7 @@
                                     <h4>BOOKS</h4>
                                     <div class="recent-post">
                                         <!-- start single post -->
-                                        {% for book in object_list reversed %}
+                                        {% for book in category_id  %}
                                         <div class="recent-single-post">
                                             <div class="post-img">
                                                 {% if book.cover %}
@@ -77,6 +78,7 @@
                                 </div>
                                 <!-- recent end -->
                             </div>
+                            
 
                             <div class="single-blog-page">
                                 <div class="left-tags blog-tags">

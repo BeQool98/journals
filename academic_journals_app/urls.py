@@ -6,7 +6,8 @@ urlpatterns = [
     path('book-details/<slug:slug>', BookDetail.as_view(), name="book_detail"),
     path('download/<int:document_id>', download, name="download"),
     path('search/', search, name="search"),
-    path('category/<str:title>/', category, name="category"),
+    # path('category/', category, name="category"),
+    path('category/<str:title>/', category_id, name="category_id"),
    
 ]
 

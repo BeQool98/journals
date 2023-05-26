@@ -2,6 +2,7 @@ from typing import Any, Dict
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import *
+from .forms import *
 from django.views.generic import ListView, DetailView
 
 # Create your views here.
@@ -11,7 +12,7 @@ class Home(ListView):
     template_name= "book.html"
 
     def  get_context_data(self,*args, **kwargs):
-        category = Category.objects.all()
+        category = Category.objects.all() 
         latest = BookDetailPost.objects.all().last()
         context = super(Home, self).get_context_data(*args, **kwargs)
         context["category"] = category
@@ -23,7 +24,26 @@ class Home(ListView):
 
 class BookDetail(DetailView):
     model = BookDetailPost
+    # form_class = CommentForm
     template_name= "book-details.html"
+    # fields = '__all__'
+
+    def form_valid(self, form):
+         form.instance.post_id = self.kwargs['pk']
+         return super().form_valid(form)
+
+    def get_context_data(self, *args, **kwargs):
+         category = Category.objects.all()  
+         comment = CommentForm()
+         unique_comment = Comment.objects.all()
+         context= super(BookDetail, self).get_context_data(*args,**kwargs)
+         context["category"] = category
+         context["comment"] = comment
+         context["unique_comment"] = unique_comment
+         return context
+    
+
+
 
    
 def download(self, document_id) :
@@ -33,23 +53,40 @@ def download(self, document_id) :
         return response
 
 
+def category_id(request, title):
+    category = Category.objects.all()
+    category_id = BookDetailPost.objects.filter(category=title)
+    print('cats_book:',category)
 
-
-
-def category(request, title):
-    category = Category.objects.filter(category=title)
-
-    context = {'title': title, 'category': category}
+    context = { 'category_id': category_id, 'category': category }
     
-    return render(request, 'category.html', context)
+    return render(request, 'category-option-id.html', context)
 
 def search(request):
-     if request.method == 'POST':
+    category = Category.objects.all()
+
+    if request.method == 'POST':
         search = request.POST.get('search_btn')
         print(search)
         searched = BookDetailPost.objects.filter(title__contains=search)
-        print(searched)
-     return searched
+        searched_author = BookDetailPost.objects.filter(keywords__contains=search)
+        print('search:', searched)
+        print('s_a:', searched_author)
+        latest = BookDetailPost.objects.all().last()
+
+        context = {
+             'searched': searched,
+             'searched_author': searched_author,
+             'latest': latest,
+             'search': search,
+             'category': category
+        }
+        return render(request, 'search.html', context)
+
+    else:
+         
+        return render(request, 'search.html', {'category': category})
+
     #| slice: "200"
   
 

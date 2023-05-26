@@ -9,3 +9,5 @@ admin.site.register(Category)
 class BookDetailPostAdmin(admin.ModelAdmin):
     prepopulated_fields={"slug": ("title",)}
 admin.site.register(BookDetailPost, BookDetailPostAdmin)
+
+admin.site.register(Comment)

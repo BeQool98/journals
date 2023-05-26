@@ -43,10 +43,10 @@
     <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex justify-content-between">
 
-            <div class="logo">
-                <h1><a href="{%url 'home'%}"><img src="" alt=""><span>VUNO</span>KLANG</a></h1>
+            <div class="logo d-flex">
+                <a href="{%url 'home'%}"><img src="{% static 'img/logo.jpg'%}" alt="" class="img-fluid"></a>
+                {% comment %} <h1><a href="{%url 'home'%}"><img src="" alt=""><span>  VUNO</span>KLANG</a></h1> {% endcomment %}
                 <!-- Uncomment below if you prefer to use an image logo -->
-                {% comment %} <a href="index.html"><img src="{% static 'img/logo.jpg'%}" alt="" class="img-fluid"></a> {% endcomment %}
             </div>
 
             <nav id="navbar" class="navbar">

@@ -14,9 +14,10 @@
                         <div class="page-head-blog">
                             <div class="single-blog-page">
                                 <!-- search option start -->
-                                <form action="#">
+                                <form method="POST" action="{% url 'search' %}" >
+                                    {% csrf_token %}
                                     <div class="search-option">
-                                        <input type="text" placeholder="Search for books">
+                                        <input type="text" name="search_btn" placeholder="Search for books..">
                                         <button class="button" type="submit">
                                         <i class="bi bi-search"></i>
                                         
@@ -31,24 +32,32 @@
                                     <h4>BOOKS</h4>
                                     <div class="recent-post">
                                         <!-- start single post -->
-                                        {% for book in object_list reversed %}
+                                        {% if searched %}
+                                        {% for search in searched %}
                                         <div class="recent-single-post">
                                             <div class="post-img">
-                                                <a href="#">
-                                                    <img src="{% static 'img/blog/1.jpg' %}" alt="">
+                                                {% if search.cover %}
+                                                <a href="{{search.get_absolute_url}}">
+                                                    <img src="{{search.cover.url}}" alt="{{book.title}}" style="width: 100px; height: 60px;">
                                                 </a>
+                                                {% else %}
+                                                <a href="{{search.get_absolute_url}}">
+                                                    <img src="{% static 'img/background/empty.jfif' %}" alt="No image here" style="width: 100px; height: 60px;">
+                                                </a>
+
+                                                {% endif %}
                                             </div>
                                             <div class="pst-content">
                                                 <p>
-                                                    <a href="{{book.get_absolute_url}}"> <strong>{{book.title}}</strong></a>
+                                                    <a href="{{search.get_absolute_url}}"> <strong>{{search.title}}</strong></a>
                                                     <br>
                                                     <span class="comments-type">
                                                         <i class="bi bi-person"></i>
-                                                        <a href="#"> author</a>
+                                                        <a href="{{search.get_absolute_url}}"> author</a>
                                                         </span> |
                                                     <span class="comments-type">
                                                           <i class="bi bi-chat"></i>
-                                                          <a href="#"> 11 comments</a>
+                                                          <a href="{{search.get_absolute_url}}"> 11 comments</a>
                                                           </span> |
                                                     <span class="date-type">
                                                       <i class="bi bi-calendar"></i> {{book.updated_on}}
@@ -62,6 +71,48 @@
                                             </div>
                                         </div>
                                         {% endfor %}
+                                        {% elif searched_author %}
+                                        {% for search in searched_author %}
+                                        <div class="recent-single-post">
+                                            <div class="post-img">
+                                                {% if search.cover %}
+                                                <a href="{{search.get_absolute_url}}">
+                                                    <img src="{{search.cover.url}}" alt="{{book.title}}" style="width: 100px; height: 60px;">
+                                                </a>
+                                                {% else %}
+                                                <a href="{{search.get_absolute_url}}">
+                                                    <img src="{% static 'img/background/empty.jfif' %}" alt="No image here" style="width: 100px; height: 60px;">
+                                                </a>
+
+                                                {% endif %}
+                                            </div>
+                                            <div class="pst-content">
+                                                <p>
+                                                    <a href="{{search.get_absolute_url}}"> <strong>{{search.title}}</strong></a>
+                                                    <br>
+                                                    <span class="comments-type">
+                                                        <i class="bi bi-person"></i>
+                                                        <a href="{{search.get_absolute_url}}"> author</a>
+                                                        </span> |
+                                                    <span class="comments-type">
+                                                          <i class="bi bi-chat"></i>
+                                                          <a href="{{search.get_absolute_url}}"> 11 comments</a>
+                                                          </span> |
+                                                    <span class="date-type">
+                                                      <i class="bi bi-calendar"></i> {{book.updated_on}}
+                                                    </span>
+
+
+
+                                                </p>
+
+
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        {% else %}
+                                        <p>No book titled <strong>{{search}}</strong></p>
+                                        {% endif %}
                                         <!-- End single post -->
 
 
@@ -75,16 +126,23 @@
                                     <div class="popular-tag left-side-tags left-blog">
                                         <h4>Categories</h4>
                                         <ul>
-                                           
-                                            <li>
-                                                <a href="">{% for category in category %}{{category}}{% endfor %}</a>
-                                            </li>
                                             
-
+                                          {% for category in category  %}
+                            
+                                            <li>
+                                                
+                                               <a href="{% url 'category_id' category.id%}">{{category.title}}</a>
+                                               
+                                            </li>
+                                   
+                                            {% endfor %}
+                                            
+                            
                                         </ul>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <!-- End left sidebar -->
@@ -95,8 +153,13 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="single-blog">
                                     <div class="single-blog-img">
-                                        <a href="blog-details.html">
-                                            <img src="{% static 'img/blog/1.jpg' %}" alt="">
+                                        <a href="{{latest.get_absolute_url}}">
+                                            {% if latest.cover %}
+                                            <img src="{{latest.cover.url}}" alt="{{latest.title}}">
+                                            {% else %}
+                                            <img src="{% static 'img/background/empty.jfif' %}" alt="No image here">
+                                            
+                                            {% endif %}
                                         </a>
                                     </div>
                                     <div class="blog-meta">
@@ -105,19 +168,19 @@
                                         <a href="#">11 comments</a>
                                       </span>
                                         <span class="date-type">
-                                        <i class="bi bi-calendar"></i>2016-03-05 / 09:10:16
+                                        <i class="bi bi-calendar"></i>{{latest.updated_on}}
                                       </span>
                                     </div>
                                     <div class="blog-text">
                                         <h4>
-                                            <a href="#">Post my imagine Items</a>
+                                            <a href="#">{{latest.title}}</a>
                                         </h4>
                                         <p>
-                                            Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit.
+                                            {{latest.description | slice:200}}...
                                         </p>
                                     </div>
                                     <span>
-                                        <a href="" class="ready-btn">Read more</a>
+                                        <a href="{{latest.get_absolute_url}}" class="ready-btn">Read more</a>
                                       </span>
                                 </div>
                             </div>
