@@ -7,6 +7,13 @@ from django.views.generic import ListView, DetailView
 
 # Create your views here.
 
+def login_user(request):
+    return render(request, "index.html")
+
+def about_page(request):
+    return render(request, "about_page.html")
+    
+
 class Home(ListView):
     model = BookDetailPost
     template_name= "book.html"
