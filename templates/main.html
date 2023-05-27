@@ -126,11 +126,11 @@
                             <div class="footer-head">
                                 <h4>BOOKS</h4>
                                 <div class="flicker-img">
-                                    {% for image in object_list %}
+                                    {% for image in new_query %}
                                     {% if image.cover %}
-                                    <a href="{{image.get_absolute_url}}"><img src="{{image.cover.url}}" alt="{{image.title}}" style="width: 100px; height: 60px;"></a>
+                                    <a href="{{image.get_absolute_url}}">{{image.id}}<img src="{{image.cover.url}}" alt="{{image.title}}" style="width: 100px; height: 60px;"></a>
                                     {% else %}
-                                    <a href="{{image.get_absolute_url}}"><img src="{% static 'img/background/empty.jfif' %}" alt="No image here" style="width: 100px; height: 60px;"></a>
+                                    <a href="{{image.get_absolute_url}}">{{image.id}}<img src="{% static 'img/background/empty.jfif' %}" alt="No image here" style="width: 100px; height: 60px;"></a>
 
                                     {% endif %}
                                     {% endfor %}

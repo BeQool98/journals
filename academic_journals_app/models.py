@@ -55,16 +55,28 @@ class BookDetailPost(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_total_comments(self):
+        return Comment.objects.filter(comment=self).count() 
 
     def get_absolute_url(self):
         return reverse("book_detail", args=[str(self.slug)])
 
 class Comment(models.Model):
-    comment = models.ForeignKey(BookDetailPost, related_name="comments", help_text="Numberof comments in a post", on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, help_text="Name of the person making a comment")
-    email = models.EmailField(help_text="Email of the person making a comment")
-    description = models.TextField(help_text="The comment made")
-    date_created = models.DateTimeField(auto_now_add=True, help_text="Date created")
+    comment = models.ForeignKey(BookDetailPost, related_name="comments", help_text="Numberof comments in a post", on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=200, help_text="Name of the person making a comment", null=True, blank=True)
+    email = models.EmailField(help_text="Email of the person making a comment", null=True, blank=True)
+    description = models.TextField(help_text="The comment made", null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True, help_text="Date created", null=True, blank=True)
 
     def __str__(self):
         return f"{self.comment.title} | {self.name}"
+
+     
+# from django_comments_xtd.models import XtdComment
+# class MyComment(XtdComment):
+#     title = models.CharField(max_length=256)
+#     page = models.ForeignKey(BookDetailPost, related_name="comments", help_text="Numberof comments in a post", on_delete=models.CASCADE, null=True, blank=True)
+
+#     def __str__(self):
+#         return self.title

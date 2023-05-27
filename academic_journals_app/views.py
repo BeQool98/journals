@@ -3,29 +3,70 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import *
 from .forms import *
-from django.views.generic import ListView, DetailView
-
+from django.views.generic import *
+from django.core.paginator import Paginator, PageNotAnInteger
+# from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage
 # Create your views here.
+
 
 def login_user(request):
     return render(request, "index.html")
 
 def about_page(request):
     return render(request, "about_page.html")
+
+
     
 
 class Home(ListView):
     model = BookDetailPost
     template_name= "book.html"
+    # paginate_by = 100
+    # context_object_name = 'book_page'  # Default: object_list
+    # queryset = BookDetailPost.objects.all().order_by('-created_on')  # Default: Model.objects.all()
+    
+    
+    
 
     def  get_context_data(self,*args, **kwargs):
+        queryset2=BookDetailPost.objects.all().order_by('-created_on')
         category = Category.objects.all() 
-        latest = BookDetailPost.objects.all().last()
+        BookDetailPost_list = BookDetailPost.objects.all()
+        page = self.request.GET.get('page', 1)
+
+        print('newqueryset:',self.queryset)
+
+        new_query=[]
+        new_query2= list(new_query[:2])
+        for i in queryset2:  
+            new_query.append(i)
+
+        
+
+        print('ne', list(new_query[:2]))
+        print(new_query2)
+            # print('item', new_query)
+        
+        # for i in new_query:
+        #     if new_query.index(i)<2:
+        #         new_query2.append(i)
+        #         print("last two", i)
+           
+
+        paginator = Paginator(BookDetailPost_list, 1)
+        try:
+            pages = paginator.page(page)
+        except PageNotAnInteger:
+            pages = paginator.page(1)
+        except EmptyPage:
+            pages = paginator.page(paginator.num_pages)
+        # latest = BookDetailPost.objects.all().last()
         context = super(Home, self).get_context_data(*args, **kwargs)
         context["category"] = category
-        context["latest"] = latest
+        context["book_page"] = pages 
+        context["new_query"] = new_query2
         return context
-
 
 
 
@@ -35,20 +76,20 @@ class BookDetail(DetailView):
     template_name= "book-details.html"
     # fields = '__all__'
 
-    def form_valid(self, form):
-         form.instance.post_id = self.kwargs['pk']
-         return super().form_valid(form)
-
     def get_context_data(self, *args, **kwargs):
          category = Category.objects.all()  
-         comment = CommentForm()
-         unique_comment = Comment.objects.all()
+         comment_form = CommentForm()
+         unique_comment = Comment.objects.filter(comment=self.get_object()).order_by('-date_created')
          context= super(BookDetail, self).get_context_data(*args,**kwargs)
          context["category"] = category
-         context["comment"] = comment
+         context["comment_form" ] = comment_form
          context["unique_comment"] = unique_comment
          return context
     
+    def post(self, request, *args, **kwargs):
+        new_comment = Comment(description=request.POST.get('description'), comment=self.get_object(), name=request.POST.get('name'), email=request.POST.get('email'))
+        new_comment.save()
+        return self.get(self, request, *args, **kwargs)
 
 
 
