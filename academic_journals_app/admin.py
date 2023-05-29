@@ -11,3 +11,6 @@ class BookDetailPostAdmin(admin.ModelAdmin):
 admin.site.register(BookDetailPost, BookDetailPostAdmin)
 
 admin.site.register(Comment)
+admin.site.register(Owner_Details) 
+admin.site.register(Comment_Email) 
+

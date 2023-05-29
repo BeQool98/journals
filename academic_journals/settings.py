@@ -39,9 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'django_comments_xtd',
-    'django_comments',
     'academic_journals_app', 
   
 ]
@@ -135,10 +132,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/book')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Comments
-SITE_ID = 1
 
-COMMENTS_APP = 'django_comments_xtd'
+#Installed Apps
+#    'django.contrib.sites',
+#     'django_comments_xtd',
+#     'django_comments',
+# SITE_ID = 1
 
-COMMENTS_XTD_MAX_THREAD_LEVEL = 7
+# COMMENTS_APP = 'django_comments_xtd'
 
-COMMENTS_XTD_CONFIRM_EMAIL = False
+# COMMENTS_XTD_MAX_THREAD_LEVEL = 7
+
+# COMMENTS_XTD_CONFIRM_EMAIL = False

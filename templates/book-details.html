@@ -27,12 +27,13 @@
                                     <div class="post-information">
                                         <h2>{{object.title}}</h2>
                                         <div class="entry-meta">
-                                            <span class="author-meta"><i class="bi bi-person"></i> <a href="#">admin</a></span>
+                                            <span class="author-meta"><i class="bi bi-person"></i> <a href="#">{{object.author}}</a></span>
                                             <span><i class="bi bi-clock"></i> {{object.updated_on}}</span>
                                             <span class="tag-meta">
                                         <i class="bi bi-folder"></i>
-                                        <a href="{% url 'category_id' object.category.id%}">{{object.category}}</a>
-                                       
+                                        {% if object.category %}
+                                        <a href="{% url 'category_id' object.category.id %}">{{object.category}}</a>
+                                        {% endif %}
                                     </span>
                                                             <span>
                                         <i class="bi bi-tags"></i>
@@ -67,10 +68,11 @@
                                             {% endif %}
                                         </div>
                                         <div class="comments-list">
+                                            {% if object.comments.all %}
                                             <ul>
-                                                {% if object.comments.all %}
                                                 
                                                 {% for comment in object.comments.all %}
+                                                {% comment %} {% if request.user.is_anonymous%} {% endcomment %}
                                                 <li class="threaded-comments">
                                                     <div class="comments-details">
                                                         <div class="comments-list-img">
@@ -78,7 +80,7 @@
                                                         </div>
                                                         <div class="comments-content-wrap">
                                                             <span>
-                                                        <b><a href="mailto:{{comment.email}}">{{comment.name}}</a></b>
+                                                        <b><a href="#">{{comment.name}}</a></b>
                                                        
                                                         <span class="post-time">{{comment.date_created}}</span>
                                                             {% comment %} <a href="#">Reply</a> {% endcomment %}
@@ -88,32 +90,39 @@
                                                     </div>
                                                 </li>
                                                 {% endfor %}
-                                                
-                                                {% endif %}
-                                                <li>
+                                                {% comment %} {% else %} {% endcomment %}
+                                                {% comment %} {% for comment in object.comments.all %} {% endcomment %}
+                                                {% comment %} <li>
                                                     <div class="comments-details">
                                                         <div class="comments-list-img">
                                                             <img src="{% static 'img/blog/b02.jpg' %}" alt="post-author">
                                                         </div>
                                                         <div class="comments-content-wrap">
                                                             <span>
-                                                            <b><a href="#">admin</a></b>
-                                                            Post author
-                                                            <span class="post-time">October 6, 2014 at 6:18 pm </span>
-                                                            <a href="#">Reply</a>
+                                                                <b><a href="#">{{user.username}}</a></b>
+                                                                | Staff |
+                                                                <span class="post-time">{{comment.date_created}} </span>
+                                                                {% comment %} <a href="#">Reply</a>
                                                             </span>
-                                                            <p>Quisque orci nibh, porta vitae sagittis sit amet, vehicula vel mauris. Aenean at justo dolor. Fusce ac sapien bibendum, scelerisque libero nec</p>
+                                                            <p>{{comment.description}}</p>
                                                         </div>
                                                     </div>
-                                                </li>
-
+                                                </li> {% endcomment %}
+                                                {% comment %} {% endif %} {% endcomment %}
+                                                {% comment %} {% endfor %} {% endcomment %}
+                                                
                                                 
                                             </ul>
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="comment-respond">
                                         <h3 class="comment-reply-title">Leave a Reply </h3>
+                                        {% if request.user.is_anonymous %}
                                         <span class="email-notes">Your email address will not be published. Required fields are marked *</span>
+                                        {% else %}
+                                        <span class="email-notes"></span>
+                                        {% endif %}
                                         <form action="" method="POST" id="Comment_Form">
                                             {% csrf_token %}
                                             <div class="row">
@@ -122,7 +131,6 @@
                                                     {{comment_form.name}}
                                                     {% comment %} <input type="text" /> {% endcomment %}
                                                 </div>
-                                                
                                                 <div class="col-lg-4 col-md-4">
                                                     <p>Email *</p>
                                                     {{comment_form.email}}

@@ -28,6 +28,7 @@
                             </div>
                             <div class="single-blog-page">
                                 <!-- recent start -->
+                                {% if search %}
                                 <div class="left-blog">
                                     <h4>BOOKS</h4>
                                     <div class="recent-post">
@@ -53,14 +54,16 @@
                                                     <br>
                                                     <span class="comments-type">
                                                         <i class="bi bi-person"></i>
-                                                        <a href="{{search.get_absolute_url}}"> author</a>
+                                                        <a href="{{search.get_absolute_url}}"> {{search.author}}</a>
                                                         </span> |
+                                                        {% if search.get_total_comments %}
                                                     <span class="comments-type">
                                                           <i class="bi bi-chat"></i>
-                                                          <a href="{{search.get_absolute_url}}"> 11 comments</a>
+                                                          <a href="{{search.get_absolute_url}}"> {{search.get_total_comments}} comments</a>
                                                           </span> |
+                                                          {% endif %}
                                                     <span class="date-type">
-                                                      <i class="bi bi-calendar"></i> {{book.updated_on}}
+                                                      <i class="bi bi-calendar"></i> {{search.updated_on}}
                                                     </span>
 
 
@@ -92,14 +95,16 @@
                                                     <br>
                                                     <span class="comments-type">
                                                         <i class="bi bi-person"></i>
-                                                        <a href="{{search.get_absolute_url}}"> author</a>
+                                                        <a href="{{search.get_absolute_url}}"> {{search.author}}</a>
                                                         </span> |
+                                                        {% if  search.get_total_comments%}
                                                     <span class="comments-type">
                                                           <i class="bi bi-chat"></i>
-                                                          <a href="{{search.get_absolute_url}}"> 11 comments</a>
+                                                          <a href="{{search.get_absolute_url}}"> {{search.get_total_comments}} comments</a>
                                                           </span> |
+                                                          {% endif %}
                                                     <span class="date-type">
-                                                      <i class="bi bi-calendar"></i> {{book.updated_on}}
+                                                      <i class="bi bi-calendar"></i> {{search.updated_on}}
                                                     </span>
 
 
@@ -111,13 +116,15 @@
                                         </div>
                                         {% endfor %}
                                         {% else %}
-                                        <p>No book titled <strong>{{search}}</strong></p>
+                                        <p>No Book or Author titled <strong>{{search}}</strong></p>
                                         {% endif %}
                                         <!-- End single post -->
 
 
                                     </div>
                                 </div>
+                                {% endif %}
+
                                 <!-- recent end -->
                             </div>
 
@@ -147,58 +154,8 @@
                     </div>
                     <!-- End left sidebar -->
                     <!-- Start single blog -->
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                        <div class="row">
-                            <h4>Latest Uploads</h4>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="single-blog">
-                                    <div class="single-blog-img">
-                                        <a href="{{latest.get_absolute_url}}">
-                                            {% if latest.cover %}
-                                            <img src="{{latest.cover.url}}" alt="{{latest.title}}">
-                                            {% else %}
-                                            <img src="{% static 'img/background/empty.jfif' %}" alt="No image here">
-                                            
-                                            {% endif %}
-                                        </a>
-                                    </div>
-                                    <div class="blog-meta">
-                                        <span class="comments-type">
-                                        <i class="bi bi-chat"></i>
-                                        <a href="#">11 comments</a>
-                                      </span>
-                                        <span class="date-type">
-                                        <i class="bi bi-calendar"></i>{{latest.updated_on}}
-                                      </span>
-                                    </div>
-                                    <div class="blog-text">
-                                        <h4>
-                                            <a href="#">{{latest.title}}</a>
-                                        </h4>
-                                        <p>
-                                            {{latest.description | slice:200}}...
-                                        </p>
-                                    </div>
-                                    <span>
-                                        <a href="{{latest.get_absolute_url}}" class="ready-btn">Read more</a>
-                                      </span>
-                                </div>
-                            </div>
-                            <!-- End single blog -->
+                    {% include 'paginator.html' %}
 
-
-
-                            <div class="blog-pagination">
-                                <ul class="pagination">
-                                    <li class="page-item"><a href="#" class="page-link">&lt;</a></li>
-                                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">&gt;</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
