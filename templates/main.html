@@ -4,15 +4,18 @@
 
 <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
 
-    <title>{% block title %}VUNOKLANG{% endblock title %}</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+    <title>{% block title %}{{owner.title}}{% endblock title %}</title>
+    <meta name="description" content="{{owner.meta_description}}" >
+    <meta name="keywords" content="{{owner.keywords}}" >
+    <meta name="author" content="{{owner.meta_author}}">
+
 
     <!-- Favicons -->
-    <link href="{% static 'img/logo.jpg'%}" rel="icon">
-    <link href="{% static 'img/logo.jpg'%}" rel="apple-touch-icon">
+    <link href="{{owner.favicon.url}}" rel="icon">
+    <link href="{{owner.favicon.url}}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900" rel="stylesheet">
@@ -43,15 +46,28 @@
     <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex justify-content-between">
 
-            <div class="logo">
-                <h1><a href="{%url 'home'%}"><img src="" alt=""><span>VUNO</span>KLANG</a></h1>
+            <div class="logo d-flex">
+                {% if  owner.logo%}
+                <a href="{%url 'home'%}"><img src="{{owner.logo.url}}" alt="{{owner.title}}" class="img-fluid"></a>
+                {% elif owner.site_description%}
+                <h1><a href="{%url 'home'%}"><img src="{{owner.logo.url}}" alt=""><span></span>{{owner.site_description}}</a></h1>
+                {% endif %}
                 <!-- Uncomment below if you prefer to use an image logo -->
-                {% comment %} <a href="index.html"><img src="{% static 'img/logo.jpg'%}" alt="" class="img-fluid"></a> {% endcomment %}
             </div>
 
             <nav id="navbar" class="navbar">
                 <ul>
+<<<<<<< HEAD
                     <li><a class="" href="about">About Us</a></li>
+=======
+
+
+                    <li><a class="" href="#">Sign Up</a></li>
+                    <li><a class="" href="{%url 'login'%}">Login</a></li>
+                    <li><a class="" href="{%url 'about'%}">About Us</a></li>
+                    
+
+>>>>>>> 92a0527727c195f90c720e5e11823566c050a588
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
@@ -75,23 +91,23 @@
                         <div class="footer-content">
                             <div class="footer-head">
                                 <div class="footer-logo">
-                                    <h2><span>VUNO</span>KLANG</h2>
+                                    <h2><span></span>{{owner.footer_title}} </h2>
                                 </div>
 
-                                <p>MULTIDISCIPLINARY JOURNAL OF SCIENCE AND TECHNOLOGYEDUCATION.</p>
+                                <p>{{owner.footer_description}}.</p>
                                 <div class="footer-icons">
                                     <ul>
                                         <li>
-                                            <a href="#"><i class="bi bi-facebook"></i></a>
+                                            <a href="{{owner.facebook}}"><i class="bi bi-facebook"></i></a>
                                         </li>
                                         <li>
-                                            <a href="#"><i class="bi bi-twitter"></i></a>
+                                            <a href="{{owner.Twitter}}"><i class="bi bi-twitter"></i></a>
                                         </li>
                                         <li>
-                                            <a href="#"><i class="bi bi-instagram"></i></a>
+                                            <a href="{{owner.Instagram}}"><i class="bi bi-instagram"></i></a>
                                         </li>
                                         <li>
-                                            <a href="#"><i class="bi bi-linkedin"></i></a>
+                                            <a href="{{owner.linkedIn}}"><i class="bi bi-linkedin"></i></a>
                                         </li>
                                     </ul>
                                 </div>
@@ -104,12 +120,12 @@
                             <div class="footer-head">
                                 <h4>information</h4>
                                 <p>
-                                    FACULTY OF EDUCATION, MODIBBO ADAMA UNIVERSITY, YOLA..
+                                   {{owner.Address}}..
                                 </p>
                                 <div class="footer-contacts">
-                                    <p><span>Tel:</span><a href="tel:+2347068031933">+234 7068031933</a> </p>
-                                    <p><span>Email:</span><a href="mailto:aaelija@mau.edu.ng"> aaelija@mau.edu.ng</a> </p>
-                                    <p><span>Working Hours:</span> 9am-5pm</p>
+                                    <p><span>Tel:</span><a href="tel:{{owner.Tel}}"> {{owner.Tel}}</a> </p>
+                                    <p><span>Email:</span><a href="mailto:{{owner.Email}}"> {{owner.Email}}</a> </p>
+                                    <p><span>Working Hours:</span> {{owner.Working_hours}}</p>
                                 </div>
                             </div>
                         </div>
@@ -120,11 +136,11 @@
                             <div class="footer-head">
                                 <h4>BOOKS</h4>
                                 <div class="flicker-img">
-                                    {% for image in object_list %}
+                                    {% for image in new_query %}
                                     {% if image.cover %}
-                                    <a href="{{image.get_absolute_url}}"><img src="{{image.cover.url}}" alt="{{image.title}}" style="width: 100px; height: 60px;"></a>
+                                    <a href="{{image.get_absolute_url}}">{{image.id}}<img src="{{image.cover.url}}" alt="{{image.title}}" style="width: 100px; height: 60px;"></a>
                                     {% else %}
-                                    <a href="{{image.get_absolute_url}}"><img src="{% static 'img/background/empty.jfif' %}" alt="No image here" style="width: 100px; height: 60px;"></a>
+                                    <a href="{{image.get_absolute_url}}">{{image.id}}<img src="{% static 'img/background/empty.jfif' %}" alt="No image here" style="width: 100px; height: 60px;"></a>
 
                                     {% endif %}
                                     {% endfor %}
@@ -141,16 +157,11 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="copyright text-center">
                             <p>
-                                &copy; Copyright <strong>VUNOKLAN</strong>. All Rights Reserved
+                                &copy; Copyright <strong>{{owner.title}}</strong>. All Rights Reserved
                             </p>
                         </div>
                         <div class="credits">
-                            <!--
-              All the links in the footer should remain intact.
-              You can delete the links only if you purchased the pro version.
-              Licensing information: https://bootstrapmade.com/license/
-              Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=eBusiness
-            -->
+
                             Designed by <a href="https://mysmegearhub.com/" target="_blank">SME Gear</a>
                         </div>
                     </div>

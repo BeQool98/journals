@@ -15,3 +15,8 @@ admin.site.register(ContactUs)
 class BookDetailPostAdmin(admin.ModelAdmin):
     prepopulated_fields={"slug": ("title",)}
 admin.site.register(BookDetailPost, BookDetailPostAdmin)
+
+admin.site.register(Comment)
+admin.site.register(Owner_Details) 
+admin.site.register(Comment_Email) 
+
