@@ -222,7 +222,7 @@ div#preloader {
     display: inline-block;
     font-size: 40px;
     font-weight: 600;
-    margin-bottom: 70px;
+    /* margin-bottom: 70px; */
     position: relative;
     text-transform: capitalize;
 }
@@ -821,7 +821,7 @@ div#preloader {
 }
 
 .single-team-member {
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
 }
 
 .team-left-text h4 {
@@ -908,6 +908,8 @@ div#preloader {
 
 .team-img {
     position: relative;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .team-img>a {
@@ -2246,7 +2248,6 @@ span.email-notes {
     float: left;
     padding: 1px;
     width: 33.33%;
-
 }
 
 .footer-icons {
@@ -2591,4 +2592,12 @@ span.email-notes {
 
 .new_row {
     margin-top: 30px;
+}
+
+.text-content {
+    text-align: justify;
+}
+
+#send-message:hover {
+    color: blue;
 }

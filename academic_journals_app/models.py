@@ -58,3 +58,45 @@ class BookDetailPost(models.Model):
 
     def get_absolute_url(self):
         return reverse("book_detail", args=[str(self.slug)])
+    
+class AboutPage(models.Model):
+    header= models.CharField(max_length=200, null=True, blank=True, help_text="add the header")
+    body=models.TextField(null=True, blank=True)
+    
+    def __str__(self):
+        return self.header
+    
+    
+class EditorialMembers(models.Model):
+    name=models.CharField(max_length=200, null=True, blank=True)
+    department=models.CharField(max_length=200, null=True, blank=True)
+    consulting_editor=models.BooleanField(default=False)
+    if name is not None:
+        def __str__(self):
+            return self.name
+    
+    
+class ContactUs(models.Model):
+    name=models.CharField(max_length=200,null=True, blank=True)
+    email=models.CharField(max_length=200,null=True, blank=True)
+    subject=models.CharField(max_length=200,null=True, blank=True)
+    messagename=models.TextField()
+    
+    if name is not None:
+        def __str__(self):
+            return self.name
+        
+
+class AboutHeaders(models.Model):
+    main_header=models.CharField(max_length=100, null=True, blank=True)
+    second_header=models.CharField(max_length=200, null=True, blank=True)
+    volume=models.CharField(max_length=50, null=True, blank=True)
+    header_image1=models.ImageField(null=True, blank=True)
+    header_image2=models.ImageField(null=True, blank=True)
+    
+    
+    def __str__(self):
+        return self.main_header
+    
+
+

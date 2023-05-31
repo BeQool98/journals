@@ -1,17 +1,55 @@
 from typing import Any, Dict
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import *
 from django.views.generic import ListView, DetailView
+from django.urls import reverse
+from django.contrib import messages
+
 
 # Create your views here.
-
+'''
 def login_user(request):
     return render(request, "index.html")
+'''
 
 def about_page(request):
-    return render(request, "about_page.html")
     
+    headers=AboutHeaders.objects.get()
+    about_lists=AboutPage.objects.all()
+    editorial_members=EditorialMembers.objects.all()
+    print("headers", headers.second_header)
+    context={"headers":headers, 
+             "about_lists":about_lists, 
+             "editorial_members":editorial_members}
+    return render(request, "about_page.html", context)
+
+def contact_message(request):
+    
+    
+    if request.method == "GET":
+        # return HttpResponse("this method is not allowed")
+        return HttpResponseRedirect('/about')
+    else:
+        name=request.POST.get('name')
+        email=request.POST.get('email')
+        subject=request.POST.get('subject')
+        message=request.POST.get('message')
+        
+        try:
+            new_message=ContactUs(name=name, email=email, subject=subject, messagename=message)
+            new_message.save()
+            messages.success(request, "Message sent successfully")
+            return HttpResponseRedirect(reverse("about"))
+        except:
+            messages.error(request, "Failed to send Message")
+            return HttpResponseRedirect(reverse("about"))
+        
+        print("this is the name", name,email,subject, message)
+        return HttpResponseRedirect('/about')
+        
+
+
 
 class Home(ListView):
     model = BookDetailPost
